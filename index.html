@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="#/app1">app1</a>
+    <a href="#/app2">app2</a>
+    <script src="/lib/umd/single-spa.js"></script>
+    <script>
+        // 注册  1. 应用名称 2. 加载APP的方法 3. 匹配路由 4. 传入的props
+        singleSpa.registerApplication('app1', async () => {
+            // 这个函数需要返回结果
+            console.log('执行加载');
+            return {
+                bootstrap: async () => {
+                    console.log('bootstrap');
+                },
+                mount: async () => {
+                    console.log('mount');
+                },
+                unmount: async () => {
+                    console.log('unmount');
+                }
+            }},
+            location => location.hash.startsWith('#/app1'),
+            {store: {}}
+        )
+        singleSpa.registerApplication('app2', async () => {
+            // 这个函数需要返回结果
+            console.log('执行加载2');
+            return {
+                bootstrap: async () => {
+                    console.log('bootstrap2');
+                },
+                mount: async () => {
+                    console.log('mount2');
+                },
+                unmount: async () => {
+                    console.log('unmount2');
+                }
+            }
+            },
+            location => location.hash.startsWith('#/app2'),
+            {store: {}}
+        )
+
+        singleSpa.start();
+        // registerApplication 只加载 不挂载
+        // start才会挂载
+    </script>
+</body>
+</html>
