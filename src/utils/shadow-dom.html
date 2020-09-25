@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shadow Dom</title>
+  </head>
+  <body>
+    <style>
+      p {
+        color: green;
+      }
+      #same-id {
+        font-size: 24px;
+      }
+    </style>
+
+    <div id="shadow"></div>
+    <p id="same-id">我不是shadow dom</p>
+
+    <script>
+      let shadowDom = shadow.attachShadow({ mode: "open" });
+
+      let pElement = document.createElement("p");
+      pElement.id = 'same-id'
+      pElement.innerHTML = "我是shadow dom";
+
+      let styleElement = document.createElement("style");
+      styleElement.textContent = `p { color: blue } #same-id { font-size: 36px }`;
+      shadowDom.appendChild(pElement);
+      shadowDom.appendChild(styleElement);
+    </script>
+  </body>
+</html>
